@@ -1,0 +1,15 @@
+--- newlib/libc/include/sys/unistd.h	2012-07-06 11:41:21.000000000 +0100
++++ newlib/libc/include/sys/unistd.h	2013-09-06 22:13:38.000000000 +0100
+@@ -222,12 +222,10 @@
+ int     _EXFUN(_execve, (const char *__path, char * const __argv[], char * const __envp[] ));
+ #endif
+ 
+-#if defined(__CYGWIN__) || defined(__rtems__) || defined(__sh__) || defined(__SPU__)
+ #if !defined(__INSIDE_CYGWIN__)
+ int     _EXFUN(ftruncate, (int __fd, off_t __length));
+ int     _EXFUN(truncate, (const char *, off_t __length));
+ #endif
+-#endif
+ 
+ #if defined(__CYGWIN__) || defined(__rtems__)
+ int	_EXFUN(getdtablesize, (void));

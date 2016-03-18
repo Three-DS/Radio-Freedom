@@ -1,0 +1,29 @@
+--- newlib/libc/locale/locale.c	2012-03-29 21:27:15.000000000 +0100
++++ newlib/libc/locale/locale.c	2013-09-06 22:23:21.000000000 +0100
+@@ -188,7 +188,7 @@
+ #define _LC_LAST      7
+ #define ENCODING_LEN 31
+ 
+-#ifdef __CYGWIN__ /* Cygwin starts with LC_CTYPE set to "C.UTF-8". */
++#ifdef __DEFAULT_UTF8__ /* Cygwin starts with LC_CTYPE set to "C.UTF-8". */
+ int __EXPORT __mb_cur_max = 6;
+ #else
+ int __EXPORT __mb_cur_max = 1;
+@@ -240,7 +240,7 @@
+ static char current_categories[_LC_LAST][ENCODING_LEN + 1] = {
+     "C",
+     "C",
+-#ifdef __CYGWIN__ /* Cygwin starts with LC_CTYPE set to "C.UTF-8". */
++#ifdef __DEFAULT_UTF8__ /* Cygwin starts with LC_CTYPE set to "C.UTF-8". */
+     "C.UTF-8",
+ #else
+     "C",
+@@ -264,7 +264,7 @@
+ 
+ #endif /* _MB_CAPABLE */
+ 
+-#ifdef __CYGWIN__
++#ifdef __DEFAULT_UTF8__
+ static char lc_ctype_charset[ENCODING_LEN + 1] = "UTF-8";
+ #else
+ static char lc_ctype_charset[ENCODING_LEN + 1] = "ASCII";

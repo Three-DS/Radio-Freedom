@@ -1,0 +1,31 @@
+--- libgloss/configure.in	2012-09-26 21:11:54.000000000 +0100
++++ libgloss/configure.in	2013-09-06 22:13:38.000000000 +0100
+@@ -2,6 +2,7 @@
+ AC_PREREQ(2.59)
+ AC_INIT([libgloss],[LIBGLOSS_VERSION])
+ AC_CONFIG_SRCDIR([libnosys])
++AC_CONFIG_SRCDIR([libsysbase])
+ 
+ if test "${enable_shared}" = "yes" ; then
+     echo "Shared libraries not supported for cross compiling, ignored"
+@@ -33,6 +34,9 @@
+ dnl indicates whether to run configure within the libnosys subdirectory
+ config_libnosys=true
+ 
++dnl indicates whether to run configure within the libsysbase subdirectory
++config_libsysbase=true
++
+ case "${target}" in
+   aarch64*-*-*)
+ 	AC_CONFIG_SUBDIRS(aarch64)
+@@ -165,6 +169,10 @@
+   AC_CONFIG_SUBDIRS([libnosys])
+ fi
+ 
++if test "${config_libsysbase}" = "true"; then
++  AC_CONFIG_SUBDIRS([libsysbase])
++fi
++
+ LIB_AC_PROG_CC
+ AS=${AS-as}
+ AC_SUBST(AS)

@@ -1,0 +1,12 @@
+--- newlib/libc/stdio/findfp.c	2012-06-05 17:17:16.000000000 +0100
++++ newlib/libc/stdio/findfp.c	2013-09-06 22:13:47.000000000 +0100
+@@ -226,7 +226,8 @@
+ 
+   /* POSIX requires stderr to be opened for reading and writing, even
+      when the underlying fd 2 is write-only.  */
+-  std (s->_stderr, __SRW | __SNBF, 2, s);
++  //std (s->_stderr, __SRW | __SNBF, 2, s);
++  std (s->_stderr, __SWR | __SLBF, 2, s);
+ 
+   s->__sdidinit = 1;
+ 

@@ -1,0 +1,8 @@
+libgdopcode_la-opcodes.lo: gdopcode/opcodes.cpp \
+ /usr/include/stdc-predef.h gdopcode/opcodes.h gdopcode/dtypes.h
+
+/usr/include/stdc-predef.h:
+
+gdopcode/opcodes.h:
+
+gdopcode/dtypes.h:

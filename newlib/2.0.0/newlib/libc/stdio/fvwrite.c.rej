@@ -1,0 +1,12 @@
+--- newlib/libc/stdio/fvwrite.c	2011-12-20 09:06:58.000000000 +0000
++++ newlib/libc/stdio/fvwrite.c	2013-09-06 22:13:47.000000000 +0100
+@@ -94,7 +94,8 @@
+       do
+ 	{
+ 	  GETIOV (;);
+-	  w = fp->_write (ptr, fp->_cookie, p, MIN (len, BUFSIZ));
++	  //w = fp->_write (ptr, fp->_cookie, p, MIN (len, BUFSIZ));
++	  w = fp->_write (ptr, fp->_cookie, p, len);
+ 	  if (w <= 0)
+ 	    goto err;
+ 	  p += w;

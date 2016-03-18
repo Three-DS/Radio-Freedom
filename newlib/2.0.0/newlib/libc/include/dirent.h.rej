@@ -1,0 +1,11 @@
+--- newlib/libc/include/dirent.h	2001-11-30 17:26:47.000000000 +0000
++++ newlib/libc/include/dirent.h	2013-09-06 22:13:38.000000000 +0100
+@@ -6,7 +6,7 @@
+ #include <sys/dirent.h>
+ 
+ #if !defined(MAXNAMLEN) && !defined(_POSIX_SOURCE)
+-#define MAXNAMLEN 1024
++#define MAXNAMLEN 4096
+ #endif
+ 
+ #ifdef __cplusplus

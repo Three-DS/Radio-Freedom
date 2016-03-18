@@ -1,0 +1,16 @@
+--- newlib/configure.host	2012-12-04 21:43:20.000000000 +0000
++++ newlib/configure.host	2013-09-06 22:13:38.000000000 +0100
+@@ -711,7 +711,12 @@
+ 	default_newlib_io_long_long="yes"
+ 	newlib_cflags="${newlib_cflags} -DMISSING_SYSCALL_NAMES"
+ 	;;
+-  powerpc*-*-eabi* | \
++  powerpc*-*-eabi*)
++	default_newlib_io_long_long="yes"
++	newlib_cflags="${newlib_cflags} -DREENTRANT_SYSCALLS_PROVIDED -D__DEFAULT_UTF8__"
++	newlib_cflags="${newlib_cflags} -ffunction-sections -fdata-sections"
++	syscall_dir=syscalls
++	;;
+   powerpc*-*-elf* | \
+   powerpc*-*-linux* | \
+   powerpc*-*-rtem* | \

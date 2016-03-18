@@ -1,0 +1,11 @@
+--- newlib/libc/stdlib/wctomb_r.c	2012-08-08 12:04:18.000000000 +0100
++++ newlib/libc/stdlib/wctomb_r.c	2013-09-06 22:13:47.000000000 +0100
+@@ -8,7 +8,7 @@
+ 
+ int (*__wctomb) (struct _reent *, char *, wchar_t, const char *charset,
+ 		 mbstate_t *)
+-#ifdef __CYGWIN__
++#ifdef __DEFAULT_UTF8__
+    /* Cygwin starts up in UTF-8 mode. */
+     = __utf8_wctomb;
+ #else

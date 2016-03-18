@@ -1,0 +1,10 @@
+--- newlib/libc/stdio/Makefile.am	2009-07-03 12:58:04.000000000 +0100
++++ newlib/libc/stdio/Makefile.am	2013-09-06 22:13:47.000000000 +0100
+@@ -54,6 +54,7 @@
+ 	rename.c			\
+ 	rewind.c			\
+ 	rget.c				\
++	rmdir.c				\
+ 	scanf.c			\
+ 	sccl.c				\
+ 	setbuf.c			\

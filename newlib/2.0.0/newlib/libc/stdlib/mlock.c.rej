@@ -1,0 +1,17 @@
+--- newlib/libc/stdlib/mlock.c	2005-10-28 22:21:07.000000000 +0100
++++ newlib/libc/stdlib/mlock.c	2013-09-06 22:13:47.000000000 +0100
+@@ -39,6 +39,7 @@
+ #include <malloc.h>
+ #include <sys/lock.h>
+ 
++/*
+ #ifndef __SINGLE_THREAD__
+ __LOCK_INIT_RECURSIVE(static, __malloc_lock_object);
+ #endif
+@@ -60,5 +61,5 @@
+   __lock_release_recursive (__malloc_lock_object);
+ #endif
+ }
+-
++*/
+ #endif

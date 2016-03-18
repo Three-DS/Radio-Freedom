@@ -1,0 +1,10 @@
+--- newlib/libc/syscalls/Makefile.am	2008-01-03 22:33:37.000000000 +0000
++++ newlib/libc/syscalls/Makefile.am	2013-09-06 22:13:47.000000000 +0100
+@@ -22,7 +22,6 @@
+ 	sysunlink.c	\
+ 	syswrite.c
+ 
+-
+ ## Weed out EL/IX level 3 interfaces if necessary
+ if ELIX_LEVEL_1
+ ELIX_SOURCES =

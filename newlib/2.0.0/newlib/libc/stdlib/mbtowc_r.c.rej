@@ -1,0 +1,11 @@
+--- newlib/libc/stdlib/mbtowc_r.c	2012-08-08 12:04:18.000000000 +0100
++++ newlib/libc/stdlib/mbtowc_r.c	2013-09-06 22:13:47.000000000 +0100
+@@ -9,7 +9,7 @@
+ 
+ int (*__mbtowc) (struct _reent *, wchar_t *, const char *, size_t,
+ 		 const char *, mbstate_t *)
+-#ifdef __CYGWIN__
++#ifdef __DEFAULT_UTF8__
+    /* Cygwin starts up in UTF-8 mode. */
+    = __utf8_mbtowc;
+ #else

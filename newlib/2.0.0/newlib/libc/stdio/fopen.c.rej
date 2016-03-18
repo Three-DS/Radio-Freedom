@@ -1,0 +1,12 @@
+--- newlib/libc/stdio/fopen.c	2012-05-30 09:58:42.000000000 +0100
++++ newlib/libc/stdio/fopen.c	2013-09-06 22:13:47.000000000 +0100
+@@ -151,6 +151,9 @@
+ 
+   _newlib_flockfile_start (fp);
+ 
++  flags &= ~(__SLBF | __SNBF | __SMBF);
++  flags |= __SNBF;
++
+   fp->_file = f;
+   fp->_flags = flags;
+   fp->_cookie = (_PTR) fp;

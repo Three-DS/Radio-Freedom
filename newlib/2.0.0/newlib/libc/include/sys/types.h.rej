@@ -1,0 +1,21 @@
+--- newlib/libc/include/sys/types.h	2012-07-06 11:41:21.000000000 +0100
++++ newlib/libc/include/sys/types.h	2013-09-06 22:13:38.000000000 +0100
+@@ -134,7 +134,7 @@
+     defined(__sparc__) || defined(__SPU__)
+ typedef	unsigned long	ino_t;
+ #else
+-typedef	unsigned short	ino_t;
++typedef	unsigned int	ino_t;
+ #endif
+ #endif /*__CYGWIN__*/
+ 
+@@ -266,6 +266,9 @@
+ typedef unsigned long useconds_t;
+ typedef long suseconds_t;
+ 
++typedef __uint32_t fsblkcnt_t;
++typedef __uint32_t fsfilcnt_t;
++
+ #include <sys/features.h>
+ 
+ 

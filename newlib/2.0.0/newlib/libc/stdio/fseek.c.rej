@@ -1,0 +1,20 @@
+--- newlib/libc/stdio/fseek.c	2012-11-29 16:28:30.000000000 +0000
++++ newlib/libc/stdio/fseek.c	2013-09-06 22:13:47.000000000 +0100
+@@ -108,7 +108,7 @@
+ _DEFUN(_fseek_r, (ptr, fp, offset, whence),
+        struct _reent *ptr _AND
+        register FILE *fp  _AND
+-       long offset        _AND
++       off_t offset        _AND
+        int whence)
+ {
+   return _fseeko_r (ptr, fp, offset, whence);
+@@ -119,7 +119,7 @@
+ int
+ _DEFUN(fseek, (fp, offset, whence),
+        register FILE *fp _AND
+-       long offset       _AND
++       off_t offset       _AND
+        int whence)
+ {
+   return _fseek_r (_REENT, fp, offset, whence);

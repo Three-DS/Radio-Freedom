@@ -1,0 +1,11 @@
+--- sim/ppc/Makefile.in	2013-12-08 04:55:48.000000000 +0000
++++ sim/ppc/Makefile.in	2014-04-01 14:01:24.000000000 +0100
+@@ -552,7 +552,7 @@
+ PACKAGE_OBJ = @sim_pk_obj@
+ 
+ 
+-psim: $(TARGETLIB) main.o $(LIBIBERTY_LIB) $(BFD_LIB) $(LIBS) $(LIBINTL_DEP)
++psim: $(TARGETLIB) main.o $(LIBIBERTY_LIB) $(BFD_LIB) $(LIBINTL_DEP)
+ 	$(CC) $(CFLAGS) $(SIM_CFLAGS) $(LDFLAGS) -o psim$(EXEEXT) main.o $(TARGETLIB) $(BFD_LIB) $(LIBINTL) $(LIBIBERTY_LIB) $(LIBS)
+ 
+ run: psim
