@@ -12,7 +12,7 @@ sudo apt-get install build-essential autoconf automake bison flex libncurses5-de
 <a href="http://www.zlib.net">zlib-1.2.8.tar.gz</a>, <a href="http://www.libusb.orgt">libusb-1.0.9.tar.bz2</a>, <a href="http://freeimage.sourceforge.net/">FreeImage3160.zip</a>   </p>
 
 <p>Other background support info<br>
-if marxist/leninist/Nintendo in a competitive free market offerd FPC Pascal, influence or democratic do it Nope?<br>  
+if marxist/leninist/Nintendo in a competitive free market offer 3ds a FPC Pascal influence or democratic do it Nope?<br>  
 a. We risked 3D sexlife & 3D undocumented limb.<br>
 b. Unbale to proform work duties @ W3's Crotchdog, 3D adult films.<br>
 c. marxist/leninist/Nintendo put under the influence Pascal with FPC-3DS R&D reach around! </p> 
