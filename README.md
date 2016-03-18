@@ -1,5 +1,5 @@
 <p>Tools added and update for ctrulib 1.0.0 <br>
-   0.3.0 odball -&gt; relics can be develoment Housed Eg. GBA -&gt; NDS paLib days -&gt; the nintendo unified thyrom<br>
+   0.3.0 .. 0.6.0 ctru &amp; rev4?-DKP -&gt; relics can be develoment Housed Eg. GBA -&gt; NDS paLib days -&gt; the nintendo unified thyrom<br>
    makerom &amp; bannertool &amp; picasso<br>
    binutils-2.25 -&gt; binutils-2.25.1<br>
    gcc-4.9.2 -&gt; gcc-5.3.0  </p>
@@ -7,12 +7,12 @@
 <p>required packages for building <a href="http://devkitpro.org">DevKitPro</a> on debian/*buntu<br>
 sudo apt-get install build-essential autoconf automake bison flex libncurses5-dev libreadline-dev texinfo pkg-con gettext curl   </p>
 
-<p>Other tools, used for this build of <a href="http://devkitpro.org">DevKitPro</a><br>
+<p>Other tools, used for this build of the <a href="http://free-pascal-lazarus.989080.n3.nabble.com/I-ve-got-a-quot-nintendo-3ds-pascal-quot-that-can-all-day-td4041255.html">Radio-Freedom</a><br>
 <a href="http://gmplib.org/">gmp-6.0.0a.tar.bz2</a>, <a href="http://www.mpfr.org/">mpfr-3.1.2.tar.bz2</a>, <a href="http://www.multiprecision.org/">mpc-1.0.1.tar.gz</a><br>
 <a href="http://www.zlib.net">zlib-1.2.8.tar.gz</a>, <a href="http://www.libusb.orgt">libusb-1.0.9.tar.bz2</a>, <a href="http://freeimage.sourceforge.net/">FreeImage3160.zip</a>   </p>
 
 <p>Other background support info<br>
-if marxist/leninist/Nintendo in a competitive free market offer 3ds a FPC Pascal influence or democratic do it? Nope!<br>  
+if marxist/leninist/Nintendo 3DS as electrionic Device it features and those use in competitive free market democratic, society & ask remuneration for this open source platinum of "3DS swayed with FPC-Pascal influence" & that freedom writers is like what the (Jobs & them Apples) or (MSWindow & the PC) for a base of $60 --> executive $600! Facilties of smart & mobile, a workplace features found with in such an enritched electrionic Device! We are always looking for developers & talented others. How ever contrived these events may sound really did transpire getting in to development testbed, booting blue, brick nope, good! workin .. workin &gt; nope!  &lt; filp files on carts &amp; comments the cold booting ... it happen to me lot's Mr. Smea! <br>  
 a. We risked 3D sexlife & 3D undocumented limb.<br>
 b. Unbale to proform work duties @ W3's Crotchdog, 3D adult films.<br>
 c. Your marxist/leninist/Nintendo 3DS device put under the influence Pascal with ctru-pas R&D reach around! </p> 
