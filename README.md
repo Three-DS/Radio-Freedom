@@ -15,7 +15,7 @@ sudo apt-get install build-essential autoconf automake bison flex libncurses5-de
 if marxist/leninist/Nintendo in a competitive free market offer 3ds a FPC Pascal influence or democratic do it? Nope!<br>  
 a. We risked 3D sexlife & 3D undocumented limb.<br>
 b. Unbale to proform work duties @ W3's Crotchdog, 3D adult films.<br>
-c. marxist/leninist/Nintendo put under the influence Pascal with FPC-3DS R&D reach around! </p> 
+c. Your marxist/leninist/Nintendo 3DS device put under the influence Pascal with ctru-pas R&D reach around! </p> 
 
 <p>Other great sources of info<br>
 
