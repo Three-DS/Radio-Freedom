@@ -1,6 +1,6 @@
 <p>Tools added and update for ctrulib 1.0.0 <br>
    0.3.0 odball -&gt; relics can be develoment Housed Eg. GBA -&gt; NDS paLib days -&gt; the nintendo unified thyrom<br>
-   makerom -&gt; bannertool -&gt; picasso<br>
+   makerom -&amp; bannertool -&amp; picasso<br>
    binutils-2.25 -&gt; binutils-2.25.1<br>
    gcc-4.9.2 -&gt; gcc-5.3.0  </p>
 
