@@ -21,8 +21,7 @@ a. We risked 3D sexlife & 3D undocumented limb.<br>
 b. Unbale to proform work duties @ W3's Crotchdog, 3D adult films.<br>
 c. Your marxist/leninist/Nintendo 3DS device put under the influence Pascal with ctru-pas R&D reach around! </p> 
 
-<p>Other great sources of info<br>
-
+<p>Other great <a href="https://www.facebook.com/Three-DS-973285209425506">sources of info</a> <br>
 Rafael Vuijk --&gt; <a href="http://www.darkfader.net/">http://www.darkfader.net/</a><br>
 Liran Nuna nintendoDS sprite.h --&gt; <a href="http://www.liranuna.com/">http://www.liranuna.com/</a><br>
 Inhumain lab rat's recruitment --&gt; join the <a href="http://www.geoengineeringwatch.org/">fight for earth</a>   </p>
