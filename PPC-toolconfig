@@ -5,16 +5,16 @@ GNUBase=/opt/radiofreedom/ppc
 GNUTarget=powerpc-gnu-eabi
 
 mkdir binutils-ppc
-#patch -p1 -d ../binutils/2.24 -i ../../patches/binutils-2.24.patch
+#patch -p1 -d ../binutils/2.27 -i ../../patches/binutils-2.27.patch
 cd binutils-ppc
-sh ../../binutils/2.24/configure --prefix=$GNUBase --target=$GNUTarget --disable-nls --disable-shared --disable-debug --disable-werror --enable-poison-system-directories --enable-plugins --enable-lto --disable-dependency-tracking --disable-werror
+sh ../../binutils/2.27/configure --prefix=$GNUBase --target=$GNUTarget --disable-nls --disable-shared --disable-debug --enable-poison-system-directories --enable-plugins --enable-lto --disable-dependency-tracking --disable-werror
 make 
 make install
 cd ..
 
 mkdir binutils-mn10200
 cd binutils-mn10200
-sh ../../binutils/2.24/configure --prefix=$GNUBase --target=mn10200 --disable-nls --disable-debug --disable-dependency-tracking --disable-werror
+sh ../../binutils/2.17/configure --prefix=$GNUBase --target=mn10200 --disable-nls --disable-debug --disable-dependency-tracking --disable-werror
 make 
 make install
 cd ..
@@ -23,18 +23,19 @@ export PATH=$PATH:$GNUBase/bin
 #export PATH=$PATH:/opt/radiofreedom/ppc/bin
 
 mkdir gcc
-#patch -p1 -d ../gcc/4.8.2 -i ../../patches/gcc-4.8.2.patch
+#patch -p1 -d ../gcc/6.3.0 -i ../../patches/gcc-6.3.0.patch
 cd gcc
-sh ../../gcc/4.8.2/configure --enable-languages=c,c++,objc --enable-lto --with-cpu=750 --disable-nls --disable-shared --enable-threads --disable-multilib --disable-win32-registry --disable-libstdcxx-pch --target=$GNUTarget --with-newlib --with-headers=../../newlib/2.0.0/newlib/libc/include --prefix=$GNUBase --disable-dependency-tracking --with-pkgversion=devkitPPC 
-#release 27
+sh ../../gcc/6.3.0/configure --enable-languages=c,c++,objc,obj-c++,fortran --enable-plugins --enable-lto --with-plugin-ld=ld --with-cpu=750 --disable-nls --disable-shared --enable-threads --disable-multilib --disable-win32-registry --disable-libstdcxx-pch --disable-libstdcxx-verbose --enable-cxx-flags='-ffunction-sections -fdata-sections' --target=$GNUTarget --with-newlib --with-headers=../../newlib/2.5.0/newlib/libc/include --prefix=$GNUBase --with-system-zlib --disable-dependency-tracking --with-pkgversion=devkitPPC 
+#release 29-1
 make all-gcc
 make install-gcc
 cd ..
 
 mkdir newlib
-#patch -p1 -d ../newlib/2.0.0 -i ../../patches/newlib-2.0.0.patch
+#tar -xaf ../newlib/newlib-2.5.0.tar.gz
+patch -p1 -d ../newlib/2.5.0 -i ../../patches/newlib-ppc-2.5.0.patch
 cd newlib
-sh ../../newlib/2.0.0/configure --target=$GNUTarget --prefix=$GNUBase --enable-newlib-mb --enable-newlib-hw-fp
+sh ../../newlib/2.5.0/configure --target=$GNUTarget --prefix=$GNUBase --enable-newlib-mb --enable-newlib-hw-fp
 make 
 make install
 cd ..
@@ -52,9 +53,9 @@ rmdir $GNUBase/$GNUTarget/sys-include
 cp -v ../devkitpro/rules/ppc/* $GNUBase
 
 mkdir gdb
-#patch -p1 -d ../gdb/7.7 -i ../../patches/gdb-7.7.patch
+#patch -p1 -d ../gdb/7.11 -i ../../patches/gdb-7.11.patch
 cd newlib
-sh ../../gdb/7.7/configure --disable-nls --prefix=$GNUBase --target=$GNUTarget --disable-werror --disable-dependency
+sh ../../gdb/7.11/configure --disable-nls --prefix=$GNUBase --target=$GNUTarget --disable-werror --disable-dependency
 make 
 make install
 cd ../../devkitpro

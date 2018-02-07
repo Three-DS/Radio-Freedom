@@ -1,0 +1,64 @@
+mkdir radiofreedom
+cd radiofreedom
+
+GNUBase=/opt/radiofreedom/ppc
+GNUTarget=powerpc-gnu-eabi
+
+mkdir binutils-ppc
+#patch -p1 -d ../binutils/2.24 -i ../../patches/binutils-2.24.patch
+cd binutils-ppc
+sh ../../binutils/2.24/configure --prefix=$GNUBase --target=$GNUTarget --disable-nls --disable-shared --disable-debug --disable-werror --enable-poison-system-directories --enable-plugins --enable-lto --disable-dependency-tracking --disable-werror
+make 
+make install
+cd ..
+
+mkdir binutils-mn10200
+cd binutils-mn10200
+sh ../../binutils/2.24/configure --prefix=$GNUBase --target=mn10200 --disable-nls --disable-debug --disable-dependency-tracking --disable-werror
+make 
+make install
+cd ..
+
+export PATH=$PATH:$GNUBase/bin
+#export PATH=$PATH:/opt/radiofreedom/ppc/bin
+
+mkdir gcc
+#patch -p1 -d ../gcc/4.8.2 -i ../../patches/gcc-4.8.2.patch
+cd gcc
+sh ../../gcc/4.8.2/configure --enable-languages=c,c++,objc --enable-lto --with-cpu=750 --disable-nls --disable-shared --enable-threads --disable-multilib --disable-win32-registry --disable-libstdcxx-pch --target=$GNUTarget --with-newlib --with-headers=../../newlib/2.0.0/newlib/libc/include --prefix=$GNUBase --disable-dependency-tracking --with-pkgversion=devkitPPC 
+#release 27
+make all-gcc
+make install-gcc
+cd ..
+
+mkdir newlib
+#patch -p1 -d ../newlib/2.0.0 -i ../../patches/newlib-2.0.0.patch
+cd newlib
+sh ../../newlib/2.0.0/configure --target=$GNUTarget --prefix=$GNUBase --enable-newlib-mb --enable-newlib-hw-fp
+make 
+make install
+cd ..
+
+cd gcc
+make all
+make install
+cd ..
+
+rm -r $GNUBase/$GNUTarget/sys-include/*
+rmdir $GNUBase/$GNUTarget/sys-include
+
+#rename $GNUBase/$GNUTarget/sys-include $InstBase/$GNUTarget/include
+
+cp -v ../devkitpro/rules/ppc/* $GNUBase
+
+mkdir gdb
+#patch -p1 -d ../gdb/7.7 -i ../../patches/gdb-7.7.patch
+cd newlib
+sh ../../gdb/7.7/configure --disable-nls --prefix=$GNUBase --target=$GNUTarget --disable-werror --disable-dependency
+make 
+make install
+cd ../../devkitpro
+
+echo $(pwd)
+
+sh ./ppc-crtls.sh

@@ -10,10 +10,9 @@ GNUTarget=arm-gnu-eabi
 
 
 mkdir binutils
-#patch -p1 -d ../binutils/2.25 -i ../../patches/binutils-2.25.patch
 #patch -p1 -d ../binutils/2.25.1 -i ../../patches/binutils-2.25.1.patch
 cd binutils
-CFLAGS=$cflags LDFLAGS=$ldflags ../../binutils/2.25.1/configure --prefix=$GNUBase --target=$GNUTarget --disable-nls --disable-dependency-tracking --disable-werror --enable-lto --enable-plugins --enable-poison-system-directories
+CFLAGS=$cflags LDFLAGS=$ldflags ../../binutils/2.28/configure --prefix=$GNUBase --target=$GNUTarget --disable-nls --disable-dependency-tracking --disable-werror --enable-lto --enable-plugins --enable-poison-system-directories
 make 
 make install
 cd ..
@@ -24,23 +23,25 @@ export PATH=$PATH:$GNUBase/bin
 mkdir gcc
 #patch -p1 -d ../gcc/4.9.2 -i ../../patches/gcc-4.9.2.patch
 #patch -p1 -d ../gcc/5.3.0 -i ../../patches/gcc-5.3.0.patch
+#patch -p1 -d ../gcc/7.1.0 -i ../../patches/gcc-7.1.0.patch
 cd gcc
-CFLAGS="$cflags" CXXFLAGS="$cflags" LDFLAGS="$ldflags" CFLAGS_FOR_TARGET="-O2" CXXFLAGS_FOR_TARGET="-O2" LDFLAGS_FOR_TARGET="" ../../gcc/5.3.0/configure --enable-languages=c,c++,objc,obj-c++ --with-gnu-as --with-gnu-ld --with-gcc --with-march=armv4t --enable-cxx-flags=-ffunction-sections --disable-libstdcxx-verbose --enable-poison-system-directories --enable-interwork --enable-multilib --disable-dependency-tracking --enable-threads --disable-win32-registry --disable-nls --disable-debug --disable-libmudflap --disable-libssp --disable-libgomp --disable-libstdcxx-pch --target=$GNUTarget --with-newlib --with-headers=../../newlib/2.2.0/newlib/libc/include --prefix=$GNUBase --enable-lto --with-pkgversion="devkitARM release 45"
+CFLAGS="$cflags" CXXFLAGS="$cflags" LDFLAGS="$ldflags" CFLAGS_FOR_TARGET="-O2" CXXFLAGS_FOR_TARGET="-O2" LDFLAGS_FOR_TARGET="" ../../gcc/7.1.0/configure --enable-languages=c,c++,objc,obj-c++,fortran --with-gnu-as --with-gnu-ld --with-gcc --with-march=armv4t --enable-cxx-flags=-ffunction-sections --disable-libstdcxx-verbose --enable-poison-system-directories --enable-interwork --enable-multilib --disable-dependency-tracking --enable-threads --disable-win32-registry --disable-nls --disable-debug --disable-libmudflap --disable-libssp --disable-libgomp --disable-libstdcxx-pch --target=$GNUTarget --with-newlib --with-headers=../../newlib/2.5.0/newlib/libc/include --prefix=$GNUBase --enable-lto --with-plugin-ld=ld --with-system-zlib --with-pkgversion="devkitARM release 47"
 make all-gcc 
 make install-gcc
 cd ..
 
 mkdir newlib
-#patch -R -d ../newlib/2.2.0 -i ../../patches/newlib-2.2.0.patch
+#tar -xaf ../newlib/newlib-2.5.0.tar.gz
+patch -p1 -d ../newlib/2.5.0 -i ../../patches/newlib-arm-2.5.0.patch
 #patch -p1 -d ../newlib/2.2.0 -i ../../patches/newlib-2.2.0.patch
 cd newlib
-sh ../../newlib/2.2.0/configure --disable-newlib-supplied-syscalls --enable-newlib-mb --target=$GNUTarget --prefix=$GNUBase
+sh ../../newlib/2.5.0/configure --disable-newlib-supplied-syscalls --enable-newlib-mb --disable-newlib-wide-orient --target=$GNUTarget --prefix=$GNUBase
 make 
-make install
+make install -j1
 cd ..
 
 cd gcc
-make 
+make all
 make install
 cd ..
 
@@ -50,12 +51,18 @@ rm -fr $GNUBase/$GNUTarget/sys-include
 cp -v ../devkitpro/rules/arm/* $GNUBase
 
 mkdir gdb
-#patch -p1 -d ../gdb/7.8.2 -i ../../patches/gdb-7.8.2.patch
-cd newlib
-sh ../../gdb/7.8.2/configure --disable-nls --target=$GNUTarget --prefix=$GNUBase --disable-werror --disable-dependency-tracking
+#patch -p1 -d ../gdb/8.0 -i ../../patches/gdb-8.0.patch
+cd gdb
+sh ../../gdb/8.0/configure --disable-nls --target=$GNUTarget --prefix=$GNUBase --disable-werror --disable-dependency-tracking
 make 
 make install
-cd ../../devkitpro
+cd ..
+
+#patch -p1 -R ../gcc/7.1.0 -i ../../patches/gcc-7.1.0.patch
+patch -R ../newlib/2.5.0 -i ../../patches/newlib-arm-2.5.0.patch
+#patch -p1 -d ../gdb/8.0 -i ../../patches/gdb-8.0.patch
+
+cd ../devkitpro
 
 echo $(pwd)
 
