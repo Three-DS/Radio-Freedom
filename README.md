@@ -1,9 +1,13 @@
-<p>Tools added and update for ctrulib 1.4.0 <br>
+<p> Fortran added &amp; compiler updates <br>
    0.3.0 .. 0.6.0 ctru &amp; Rev4?-DKP -&gt; relics can be develoment Housed <br>
    Eg. GBA -&gt; NDS paLib days -&gt; the nintendo unified thyrom<br>
    makerom &amp; bannertool &amp; picasso<br>
-   binutils-2.28 -&gt; binutils-2.27<br>
-   gcc-6.3.0 -&gt; gcc-7.1.0  </p>
+   LibFat-1.1.4 -&gt; wii, cube &amp; NDS <br>
+   CITRO3D-1.0.0 -&gt; CITRO3D-1.3.1 new!!!<br>
+   CTRULIB-1.0.0 -&gt; CTRULIB-1.4.0 lattest!!<br>
+   a failed GDB -&gt; GDB-8.0<br>
+   binutils-2.27.1 -&gt; binutils-2.27<br>
+   gcc-5.3.0 -&gt; gcc-7.1.0  </p>
 
 <p>required packages for building <a href="http://devkitpro.org">DevKitPro</a> on debian/*buntu<br>
 sudo apt-get install build-essential autoconf automake bison flex libncurses5-dev libreadline-dev texinfo pkg-con gettext curl   </p>
