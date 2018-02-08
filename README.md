@@ -1,4 +1,4 @@
-<p> Fortran added &amp; compiler updates; sorry I don't have a Wii; Lee/Riel 3D & FreePascal portions tested on actual 3DS device<br>
+<p> Fortran added &amp; compiler updates; sorry I don't have a Wii; FreePascal portions tested on actual 3DS device<br>
    0.3.0 .. 0.6.0 ctru &amp; Rev4?-DKP -&gt; relics can be develoment Housed <br>
    Eg. GBA -&gt; NDS paLib days -&gt; the nintendo unified thyrom<br>
    LibFat-1.1.4 -&gt; wii, cube &amp; NDS <br>
