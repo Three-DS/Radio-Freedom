@@ -1,4 +1,4 @@
-    .section	".crt0","ax"
+    .section	".init"
 	.code 32
 	.align
 	.global _start

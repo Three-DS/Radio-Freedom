@@ -67,17 +67,11 @@ __irq_flags	=	0x03007ff8;
 SECTIONS
 {
 	. = __text_start;
-	.crt0 :
-	{
-		KEEP (*(.crt0))
-		. = ALIGN(4);
-	} >rom =0xff
-
-
 	.init :
 	{
-		KEEP (*(SORT_NONE(.init)))
-	} >rom
+		KEEP (*(.init))
+		. = ALIGN(4);
+	} >rom =0xff
 
 	.plt :
 	{

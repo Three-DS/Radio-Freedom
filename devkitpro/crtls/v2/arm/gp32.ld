@@ -9,18 +9,12 @@ MEMORY
 
 SECTIONS
 {
-  .crt0           :
+  .init           :
   {
     __text_start = . ;
-    KEEP (*(.crt0))
+    KEEP (*(.init))
     . = ALIGN(4);  /* REQUIRED. LD is flaky without it. */
   } >ram = 0xff
-
-  .init :
-  {
-    KEEP (*(SORT_NONE(.init)))
-  } >ram
-
   .plt            : { *(.plt) } >ram = 0xff
 
  

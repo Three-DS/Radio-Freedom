@@ -3,55 +3,43 @@ OUTPUT_ARCH(arm)
 ENTRY(_start)
 
 MEMORY {
-
-	rom	: ORIGIN = 0x08000000, LENGTH = 32M
-	iwram	: ORIGIN = 0x037f8000, LENGTH = 96K	
-	vram	: ORIGIN = 0x06000000, LENGTH = 256K
+	/*	This base address is chosen to be a reserved instruction in THUMB mode,
+		and SWILT in ARM mode, with an impossible SWI value. This should allow
+		the patcher / linker to find all shifted addresses within each section.
+		Changed sections are: glue_7, got
+	*/
+	ddmem	: ORIGIN = 0xBF800000, LENGTH = 32K		
 }
 
-__iwram_start	=	ORIGIN(iwram);
-__iwram_top	=	ORIGIN(iwram)+ LENGTH(iwram);
-
-__sp_irq	=	__iwram_top - 0x100;
-__sp_svc	=	__sp_irq - 0x100;
-__sp_usr	=	__sp_svc - 0x100;
-
-__irq_flags	=	0x04000000 - 8;
-__irq_flagsaux	=	0x04000000 - 0x40;
-__irq_vector	=	0x04000000 - 4;
 
 SECTIONS
 {
-	.crt0	:
+	.init	:
 	{
 		__text_start = . ;
-		KEEP (*(.crt0))
+		KEEP (*(.init))
 		. = ALIGN(4);  /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
-
-	__arm7_lma__ = .;
-	__arm7_start__ = .;
-	.init           :
-	{
-		KEEP (*(SORT_NONE(.init)))
-	} >vram = 0xff
-
-	.plt : { *(.plt) } >vram = 0xff
+	} >ddmem = 0xff
 
 	.text :   /* ALIGN (4): */
 	{
-		*(.text .stub .text.* .gnu.linkonce.t.*)
-		KEEP (*(.text.*personality*))
+		*(.text.*)
+		*(.stub)
 		/* .gnu.warning sections are handled specially by elf32.em.  */
 		*(.gnu.warning)
-		*(.glue_7t) *(.glue_7) *(.vfp11_veneer)
+		*(.gnu.linkonce.t*)
+		__glue_start = ABSOLUTE(.);
+		*(.glue_7)
+		*(.glue_7t)
+		__glue_end = ABSOLUTE(.);
 		. = ALIGN(4);  /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
+	} >ddmem = 0xff
 
 	.fini           :
 	{
 		KEEP (*(.fini))
-	} >vram =0xff
+		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
+	} >ddmem =0xff
 
 	__text_end = . ;
 
@@ -64,11 +52,11 @@ SECTIONS
 		*(.gnu.linkonce.r*)
 		SORT(CONSTRUCTORS)
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
+	} >ddmem = 0xff
 
-	.ARM.extab   : { *(.ARM.extab* .gnu.linkonce.armextab.*) } >vram
+	.ARM.extab   : { *(.ARM.extab* .gnu.linkonce.armextab.*) } >ddmem
 	__exidx_start = .;
-	.ARM.exidx   : { *(.ARM.exidx* .gnu.linkonce.armexidx.*) } >vram
+	.ARM.exidx   : { *(.ARM.exidx* .gnu.linkonce.armexidx.*) } >ddmem
 	__exidx_end = .;
 
 /* Ensure the __preinit_array_start label is properly aligned.  We
@@ -77,13 +65,13 @@ SECTIONS
    be empty, which isn't pretty.  */
 	. = ALIGN(32 / 8);
 	PROVIDE (__preinit_array_start = .);
-	.preinit_array     : { KEEP (*(.preinit_array)) } >vram = 0xff
+	.preinit_array     : { KEEP (*(.preinit_array)) } >ddmem = 0xff
 	PROVIDE (__preinit_array_end = .);
 	PROVIDE (__init_array_start = .);
-	.init_array     : { KEEP (*(.init_array)) } >vram = 0xff
+	.init_array     : { KEEP (*(.init_array)) } >ddmem = 0xff
 	PROVIDE (__init_array_end = .);
 	PROVIDE (__fini_array_start = .);
-	.fini_array     : { KEEP (*(.fini_array)) } >vram = 0xff
+	.fini_array     : { KEEP (*(.fini_array)) } >ddmem = 0xff
 	PROVIDE (__fini_array_end = .);
 
 	.ctors :
@@ -99,7 +87,7 @@ SECTIONS
 		KEEP (*(SORT(.ctors.*)))
 		KEEP (*(.ctors))
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
+	} >ddmem = 0xff
 
 	.dtors :
 	{
@@ -108,23 +96,32 @@ SECTIONS
 		KEEP (*(SORT(.dtors.*)))
 		KEEP (*(.dtors))
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
+	} >ddmem = 0xff
 
 	.eh_frame :
 	{
 		KEEP (*(.eh_frame))
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
+	} >ddmem = 0xff
 
 	.gcc_except_table :
 	{
 		*(.gcc_except_table)
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
-	.jcr            : { KEEP (*(.jcr)) } >vram = 0
-	.got            : { *(.got.plt) *(.got) } >vram = 0
+	} >ddmem = 0xff
+	.jcr            : { KEEP (*(.jcr)) } >ddmem = 0
 
 
+	__got_start = . ;
+	.got            : 
+	{ 
+		*(.got.plt) 
+		*(.got) 
+		*(.rel.got)
+	} >ddmem = 0
+	__got_end = . ;
+
+	
 	.data ALIGN(4) : 	{
 		__data_start = ABSOLUTE(.);
 		*(.data)
@@ -133,11 +130,9 @@ SECTIONS
 		CONSTRUCTORS
 		. = ALIGN(4);
 		__data_end = ABSOLUTE(.) ;
-	} >vram = 0xff
+	} >ddmem = 0xff
 
-
-	__arm7_end__ = .;
-
+	__data_end = . ;
 
 	.bss ALIGN(4) :
 	{
@@ -148,9 +143,14 @@ SECTIONS
 		*(.bss*)
 		*(COMMON)
 		. = ALIGN(4);    /* REQUIRED. LD is flaky without it. */
-		__bss_end__ = ABSOLUTE(.);
-		__end__ = ABSOLUTE(.);
-	} >vram
+	} >ddmem
+
+	__bss_end = . ;
+	__bss_end__ = . ;
+
+	_end = . ;
+	__end__ = . ;
+	PROVIDE (end = _end);
 
 	/* Stabs debugging sections.  */
 	.stab 0 : { *(.stab) }

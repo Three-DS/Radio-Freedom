@@ -6,7 +6,6 @@ MEMORY {
 
 	rom	: ORIGIN = 0x08000000, LENGTH = 32M
 	iwram	: ORIGIN = 0x037f8000, LENGTH = 96K	
-	vram	: ORIGIN = 0x06000000, LENGTH = 256K
 }
 
 __iwram_start	=	ORIGIN(iwram);
@@ -27,16 +26,14 @@ SECTIONS
 		__text_start = . ;
 		KEEP (*(.crt0))
 		. = ALIGN(4);  /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
+	} >iwram = 0xff
 
-	__arm7_lma__ = .;
-	__arm7_start__ = .;
 	.init           :
 	{
 		KEEP (*(SORT_NONE(.init)))
-	} >vram = 0xff
+	} >iwram = 0xff
 
-	.plt : { *(.plt) } >vram = 0xff
+	.plt : { *(.plt) } >iwram = 0xff
 
 	.text :   /* ALIGN (4): */
 	{
@@ -46,12 +43,12 @@ SECTIONS
 		*(.gnu.warning)
 		*(.glue_7t) *(.glue_7) *(.vfp11_veneer)
 		. = ALIGN(4);  /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
+	} >iwram = 0xff
 
 	.fini           :
 	{
 		KEEP (*(.fini))
-	} >vram =0xff
+	} >iwram =0xff
 
 	__text_end = . ;
 
@@ -64,11 +61,11 @@ SECTIONS
 		*(.gnu.linkonce.r*)
 		SORT(CONSTRUCTORS)
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
+	} >iwram = 0xff
 
-	.ARM.extab   : { *(.ARM.extab* .gnu.linkonce.armextab.*) } >vram
+	.ARM.extab   : { *(.ARM.extab* .gnu.linkonce.armextab.*) } >iwram
 	__exidx_start = .;
-	.ARM.exidx   : { *(.ARM.exidx* .gnu.linkonce.armexidx.*) } >vram
+	.ARM.exidx   : { *(.ARM.exidx* .gnu.linkonce.armexidx.*) } >iwram
 	__exidx_end = .;
 
 /* Ensure the __preinit_array_start label is properly aligned.  We
@@ -77,13 +74,13 @@ SECTIONS
    be empty, which isn't pretty.  */
 	. = ALIGN(32 / 8);
 	PROVIDE (__preinit_array_start = .);
-	.preinit_array     : { KEEP (*(.preinit_array)) } >vram = 0xff
+	.preinit_array     : { KEEP (*(.preinit_array)) } >iwram = 0xff
 	PROVIDE (__preinit_array_end = .);
 	PROVIDE (__init_array_start = .);
-	.init_array     : { KEEP (*(.init_array)) } >vram = 0xff
+	.init_array     : { KEEP (*(.init_array)) } >iwram = 0xff
 	PROVIDE (__init_array_end = .);
 	PROVIDE (__fini_array_start = .);
-	.fini_array     : { KEEP (*(.fini_array)) } >vram = 0xff
+	.fini_array     : { KEEP (*(.fini_array)) } >iwram = 0xff
 	PROVIDE (__fini_array_end = .);
 
 	.ctors :
@@ -99,7 +96,7 @@ SECTIONS
 		KEEP (*(SORT(.ctors.*)))
 		KEEP (*(.ctors))
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
+	} >iwram = 0xff
 
 	.dtors :
 	{
@@ -108,21 +105,21 @@ SECTIONS
 		KEEP (*(SORT(.dtors.*)))
 		KEEP (*(.dtors))
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
+	} >iwram = 0xff
 
 	.eh_frame :
 	{
 		KEEP (*(.eh_frame))
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
+	} >iwram = 0xff
 
 	.gcc_except_table :
 	{
 		*(.gcc_except_table)
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
-	.jcr            : { KEEP (*(.jcr)) } >vram = 0
-	.got            : { *(.got.plt) *(.got) } >vram = 0
+	} >iwram = 0xff
+	.jcr            : { KEEP (*(.jcr)) } >iwram = 0
+	.got            : { *(.got.plt) *(.got) } >iwram = 0
 
 
 	.data ALIGN(4) : 	{
@@ -133,7 +130,7 @@ SECTIONS
 		CONSTRUCTORS
 		. = ALIGN(4);
 		__data_end = ABSOLUTE(.) ;
-	} >vram = 0xff
+	} >iwram = 0xff
 
 
 	__arm7_end__ = .;
@@ -150,7 +147,7 @@ SECTIONS
 		. = ALIGN(4);    /* REQUIRED. LD is flaky without it. */
 		__bss_end__ = ABSOLUTE(.);
 		__end__ = ABSOLUTE(.);
-	} >vram
+	} >iwram
 
 	/* Stabs debugging sections.  */
 	.stab 0 : { *(.stab) }

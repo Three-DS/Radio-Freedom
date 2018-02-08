@@ -6,7 +6,7 @@ MEMORY {
 
 	rom	: ORIGIN = 0x08000000, LENGTH = 32M
 	iwram	: ORIGIN = 0x037f8000, LENGTH = 96K	
-	vram	: ORIGIN = 0x06000000, LENGTH = 256K
+	vram	: ORIGIN = 0x06000000, LENGTH = 128K
 }
 
 __iwram_start	=	ORIGIN(iwram);
@@ -22,20 +22,12 @@ __irq_vector	=	0x04000000 - 4;
 
 SECTIONS
 {
-	.crt0	:
+	.init	:
 	{
 		__text_start = . ;
-		KEEP (*(.crt0))
+		KEEP (*(.init))
 		. = ALIGN(4);  /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
-
-	__arm7_lma__ = .;
-	__arm7_start__ = .;
-	.init           :
-	{
-		KEEP (*(SORT_NONE(.init)))
-	} >vram = 0xff
-
+		} >vram = 0xff
 	.plt : { *(.plt) } >vram = 0xff
 
 	.text :   /* ALIGN (4): */
@@ -135,8 +127,6 @@ SECTIONS
 		__data_end = ABSOLUTE(.) ;
 	} >vram = 0xff
 
-
-	__arm7_end__ = .;
 
 
 	.bss ALIGN(4) :

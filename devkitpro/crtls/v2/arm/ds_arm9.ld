@@ -2,56 +2,48 @@ OUTPUT_FORMAT("elf32-littlearm", "elf32-bigarm", "elf32-littlearm")
 OUTPUT_ARCH(arm)
 ENTRY(_start)
 
-MEMORY {
+__vectors_start	=	ORIGIN(vectors);
+__itcm_start	=	ORIGIN(itcm);
+__ewram_end	=	ORIGIN(ewram) + LENGTH(ewram);
+__eheap_end	=	ORIGIN(ewram) + LENGTH(ewram);
+__dtcm_start	=	ORIGIN(dtcm);
+__dtcm_top	=	ORIGIN(dtcm) + LENGTH(dtcm);
+__irq_flags	=	__dtcm_top - 0x08;
+__irq_vector	=	__dtcm_top - 0x04;
 
-	rom	: ORIGIN = 0x08000000, LENGTH = 32M
-	iwram	: ORIGIN = 0x037f8000, LENGTH = 96K	
-	vram	: ORIGIN = 0x06000000, LENGTH = 256K
-}
-
-__iwram_start	=	ORIGIN(iwram);
-__iwram_top	=	ORIGIN(iwram)+ LENGTH(iwram);
-
-__sp_irq	=	__iwram_top - 0x100;
-__sp_svc	=	__sp_irq - 0x100;
-__sp_usr	=	__sp_svc - 0x100;
-
-__irq_flags	=	0x04000000 - 8;
-__irq_flagsaux	=	0x04000000 - 0x40;
-__irq_vector	=	0x04000000 - 4;
+__sp_svc	=	__dtcm_top - 0x100;
+__sp_irq	=	__sp_svc - 0x100;
+__sp_usr	=	__sp_irq - 0x100;
 
 SECTIONS
 {
-	.crt0	:
+	.init	:
 	{
 		__text_start = . ;
-		KEEP (*(.crt0))
+		KEEP (*(.init))
 		. = ALIGN(4);  /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
+	} >ewram = 0xff
 
-	__arm7_lma__ = .;
-	__arm7_start__ = .;
-	.init           :
-	{
-		KEEP (*(SORT_NONE(.init)))
-	} >vram = 0xff
-
-	.plt : { *(.plt) } >vram = 0xff
+	.plt : { *(.plt) } >ewram = 0xff
 
 	.text :   /* ALIGN (4): */
 	{
-		*(.text .stub .text.* .gnu.linkonce.t.*)
-		KEEP (*(.text.*personality*))
+		*(EXCLUDE_FILE (*.itcm*) .text)
+
+		*(.text.*)
+		*(.stub)
 		/* .gnu.warning sections are handled specially by elf32.em.  */
 		*(.gnu.warning)
-		*(.glue_7t) *(.glue_7) *(.vfp11_veneer)
+		*(.gnu.linkonce.t*)
+		*(.glue_7)
+		*(.glue_7t)
 		. = ALIGN(4);  /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
+	} >ewram = 0xff
 
 	.fini           :
 	{
 		KEEP (*(.fini))
-	} >vram =0xff
+	} >ewram =0xff
 
 	__text_end = . ;
 
@@ -64,31 +56,42 @@ SECTIONS
 		*(.gnu.linkonce.r*)
 		SORT(CONSTRUCTORS)
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
+	} >ewram = 0xff
 
-	.ARM.extab   : { *(.ARM.extab* .gnu.linkonce.armextab.*) } >vram
-	__exidx_start = .;
-	.ARM.exidx   : { *(.ARM.exidx* .gnu.linkonce.armexidx.*) } >vram
-	__exidx_end = .;
+	.ARM.extab   : { *(.ARM.extab* .gnu.linkonce.armextab.*) } >ewram
+ 	__exidx_start = .;
+	ARM.exidx   : { *(.ARM.exidx* .gnu.linkonce.armexidx.*) } >ewram
+ 	__exidx_end = .;
 
-/* Ensure the __preinit_array_start label is properly aligned.  We
-   could instead move the label definition inside the section, but
-   the linker would then create the section even if it turns out to
-   be empty, which isn't pretty.  */
+	/*	Ensure the __preinit_array_start label is properly aligned.  We
+		could instead move the label definition inside the section, but
+		the linker would then create the section even if it turns out to
+		be empty, which isn't pretty.  */
+
 	. = ALIGN(32 / 8);
+
 	PROVIDE (__preinit_array_start = .);
-	.preinit_array     : { KEEP (*(.preinit_array)) } >vram = 0xff
+	.preinit_array     : { KEEP (*(.preinit_array)) } >ewram = 0xff
 	PROVIDE (__preinit_array_end = .);
 	PROVIDE (__init_array_start = .);
-	.init_array     : { KEEP (*(.init_array)) } >vram = 0xff
+	.init_array     :
+	{
+		KEEP (*(SORT(.init_array.*)))
+		KEEP (*(.init_array))
+	} >ewram = 0xff
 	PROVIDE (__init_array_end = .);
 	PROVIDE (__fini_array_start = .);
-	.fini_array     : { KEEP (*(.fini_array)) } >vram = 0xff
+	.fini_array     :
+	{
+		KEEP (*(.fini_array))
+		KEEP (*(SORT(.fini_array.*)))
+	} >ewram = 0xff
+
 	PROVIDE (__fini_array_end = .);
 
 	.ctors :
 	{
-	/* gcc uses crtbegin.o to find the start of the constructors, so
+	/*	gcc uses crtbegin.o to find the start of the constructors, so
 		we make sure it is first.  Because this is a wildcard, it
 		doesn't matter if the user does not actually link against
 		crtbegin.o; the linker won't look for a file to match a
@@ -99,7 +102,7 @@ SECTIONS
 		KEEP (*(SORT(.ctors.*)))
 		KEEP (*(.ctors))
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
+	} >ewram = 0xff
 
 	.dtors :
 	{
@@ -108,24 +111,33 @@ SECTIONS
 		KEEP (*(SORT(.dtors.*)))
 		KEEP (*(.dtors))
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
+	} >ewram = 0xff
 
 	.eh_frame :
 	{
 		KEEP (*(.eh_frame))
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
+	} >ewram = 0xff
 
 	.gcc_except_table :
 	{
 		*(.gcc_except_table)
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
-	} >vram = 0xff
-	.jcr            : { KEEP (*(.jcr)) } >vram = 0
-	.got            : { *(.got.plt) *(.got) } >vram = 0
+	} >ewram = 0xff
+	.jcr            : { KEEP (*(.jcr)) } >ewram = 0
+	.got            : { *(.got.plt) *(.got) *(.rel.got) } >ewram = 0
+
+	.ewram ALIGN(4) : 
+	{
+		__ewram_start = ABSOLUTE(.) ;
+		*(.ewram)
+		*ewram.*(.text)
+		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
+	} >ewram = 0xff
 
 
-	.data ALIGN(4) : 	{
+	.data ALIGN(4) :
+	{
 		__data_start = ABSOLUTE(.);
 		*(.data)
 		*(.data.*)
@@ -133,13 +145,51 @@ SECTIONS
 		CONSTRUCTORS
 		. = ALIGN(4);
 		__data_end = ABSOLUTE(.) ;
-	} >vram = 0xff
+	} >ewram = 0xff
 
 
-	__arm7_end__ = .;
+	__dtcm_lma = . ;
+	__bss_vma = . ;
+
+	.dtcm __dtcm_start : AT (__dtcm_lma)
+	{
+		*(.dtcm)
+		*(.dtcm.*)
+		. = ALIGN(4);
+		__dtcm_end = ABSOLUTE(.);
+	} >dtcm  = 0xff
 
 
-	.bss ALIGN(4) :
+	__itcm_lma = __dtcm_lma + SIZEOF(.dtcm);
+
+	.itcm __itcm_start : AT (__itcm_lma)
+	{
+		*(.itcm)
+		*itcm.*(.text)
+		. = ALIGN(4);
+		__itcm_end = ABSOLUTE(.);
+	} >itcm = 0xff
+	
+	__vectors_lma = __itcm_lma + SIZEOF(.itcm);
+
+	.vectors __vectors_start : AT (__vectors_lma)
+	{
+		*(.vectors)
+		*vectors.*(.text)
+		. = ALIGN(4);
+		__vectors_end = ABSOLUTE(.);
+	} >vectors = 0xff
+	
+	.sbss __dtcm_end (NOLOAD): 
+	{
+		__sbss_start = ABSOLUTE(.);
+		__sbss_start__ = ABSOLUTE(.);
+		*(.sbss)
+		. = ALIGN(4);    /* REQUIRED. LD is flaky without it. */
+		__sbss_end = ABSOLUTE(.);
+	} >dtcm 
+
+	.bss __bss_vma (NOLOAD): 
 	{
 		__bss_start = ABSOLUTE(.);
 		__bss_start__ = ABSOLUTE(.);
@@ -148,9 +198,11 @@ SECTIONS
 		*(.bss*)
 		*(COMMON)
 		. = ALIGN(4);    /* REQUIRED. LD is flaky without it. */
-		__bss_end__ = ABSOLUTE(.);
-		__end__ = ABSOLUTE(.);
-	} >vram
+		__bss_end__ = ABSOLUTE(.) ;
+		__end__ = ABSOLUTE(.) ;
+	} AT>ewram 
+
+
 
 	/* Stabs debugging sections.  */
 	.stab 0 : { *(.stab) }

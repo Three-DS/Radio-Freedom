@@ -13,9 +13,9 @@ SECTIONS
 {
 	.  = 0x02000000;
 
-	.crt0 :
+	.init :
 	{
-		*(.crt0)
+		*(.init)
 		. = ALIGN(4);
 	} = 0xff
 
