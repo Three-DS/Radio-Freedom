@@ -1,11 +1,11 @@
-<p> Fortran added &amp; compiler updates <br>
+<p> Fortran added &amp; compiler updates; sorry I don't have a Wii; Lee/Riel 3D & FreePascal portions tested on actual 3DS device<br>
    0.3.0 .. 0.6.0 ctru &amp; Rev4?-DKP -&gt; relics can be develoment Housed <br>
    Eg. GBA -&gt; NDS paLib days -&gt; the nintendo unified thyrom<br>
    LibFat-1.1.4 -&gt; wii, cube &amp; NDS <br>
-   CITRO3D-1.0.0 -&gt; CITRO3D-1.3.1 new!!!<br>
-   CTRULIB-1.0.0 -&gt; CTRULIB-1.4.0 lattest!!<br>
+   CITRO3D-1.0.0 -&gt; CITRO3D-1.3.1 New!!!<br>
+   CTRULIB-1.0.0 -&gt; CTRULIB-1.4.0 Lattest!!<br>
    a failed GDB -&gt; GDB-8.0<br>
-   binutils-2.21 -&gt; binutils-2.28<br>
+   binutils-2.21 -&gt; binutils-2.17, binutils-2.27, binutils-2.28<br>
    gcc-5.3.0 -&gt; gcc-7.1.0  </p>
 
 <p>required packages for building <a href="http://devkitpro.org">DevKitPro</a> on debian/*buntu<br>
@@ -24,7 +24,7 @@ Inhumain lab rat's recruitment --&gt; join the <a href="http://www.geoengineerin
 
 <h2><a id="user-content--remember-friends-oh-slumlord-kumbaya" class="anchor" href="#-remember-friends-oh-slumlord-kumbaya" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" role="img" version="1.1" viewBox="0 0 16 16" width="16"><path d="M4 9h1v1h-1c-1.5 0-3-1.69-3-3.5s1.55-3.5 3-3.5h4c1.45 0 3 1.69 3 3.5 0 1.41-0.91 2.72-2 3.25v-1.16c0.58-0.45 1-1.27 1-2.09 0-1.28-1.02-2.5-2-2.5H4c-0.98 0-2 1.22-2 2.5s1 2.5 2 2.5z m9-3h-1v1h1c1 0 2 1.22 2 2.5s-1.02 2.5-2 2.5H9c-0.98 0-2-1.22-2-2.5 0-0.83 0.42-1.64 1-2.09v-1.16c-1.09 0.53-2 1.84-2 3.25 0 1.81 1.55 3.5 3 3.5h4c1.45 0 3-1.69 3-3.5s-1.5-3.5-3-3.5z"></path></svg></a>&amp; remember friends, Oh slumlord kumbaya...</h2>
 
-Too the moon & build retirement &amp; Harbour, recycle-plant satilite class "A" componets<br>
+Too the moon & build retirement home &amp; harbour a re-cycling plant for satilite class "A" components<br>
 canvas solar system 1/6 fuel launchs<br> 
-primary cells that were "coldwar were all dead toxics" used in a new campain's?<br>
+primary cells that were "coldwar all deadly & toxic" used in new campain's?<br>
 Aid our portion of the inter-stellar genepool &amp; weather ours inthe cosmos?
