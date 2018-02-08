@@ -54,7 +54,7 @@ cp -v ../devkitpro/rules/ppc/* $GNUBase
 
 mkdir gdb
 #patch -p1 -d ../gdb/7.11 -i ../../patches/gdb-7.11.patch
-cd newlib
+cd gdb
 sh ../../gdb/7.11/configure --disable-nls --prefix=$GNUBase --target=$GNUTarget --disable-werror --disable-dependency
 make 
 make install
