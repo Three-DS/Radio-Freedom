@@ -9,7 +9,7 @@ GNUTarget=arm-gnu-eabi
 #export PATH=$PATH:$GNUBase/bin
 #export PATH=$PATH:/opt/radiofreedom/arm/bin
 
-. $(pwd)/versions.inc
+. $(pwd)/versions.iii.inc
 
 srcdir=$(pwd)
 
@@ -47,9 +47,10 @@ sh ./buildlib.sh libfat/$LIBFAT_VER/nds
 sh ./buildlib.sh libmirko/$LIBMIRKO_VER
 sh ./buildlib.sh libfilesystem/$FILESYSTEM_VER
 sh ./buildlib.sh libctru/$LIBCTRU_VER
+sh ./buildlib.sh libcitro3d/$CITRO3D_VER
 
 #rm -r $GNUBase/$GNUTarget/sys-include/*
 #rmdir $GNUBase/$GNUTarget/sys-include
 
 #mxml-2.6 complains over this
-rename $GNUBase/$GNUTarget/include/pthread.h $GNUBase/$GNUTarget/include/_pthread.h
+#rename $GNUBase/$GNUTarget/include/pthread.h $GNUBase/$GNUTarget/include/_pthread.h
